@@ -30,12 +30,14 @@ int main(int narg, char** argv) {
         clog << "Failed to initialize data\nExiting...\n";
         return -1;
     }
-    
+    clock_t start = clock();
     while (!reqList.isEmpty()) {
         if (!processRequest(reqList[0], recDB, pGData))
             cout << "Failed to process the request\n";
         reqList.removeHead();
     }
+    clock_t end = clock();
+    cout << (double)(end - start) / 1000 << endl;
     cout << resetiosflags(ios::showbase) << setprecision(-1);
     /// Release any global allocaed data
     releaseVGlobalData(pGData);

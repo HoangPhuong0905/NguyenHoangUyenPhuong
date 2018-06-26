@@ -162,11 +162,12 @@ bool processRequest(VRequest& request, L1List<VRecord>& recList, void* pGData) {
                                     }
                                     pCurr = pCurr->pNext;
                                 }
-                                cout << Num;
+                                cout << Num << endl;
                             }
                             else {
                                 cout << "CNS : False" << endl;
                             }
+                            break;
                         }
                         default: {
                             cout << request.code << " : False" << endl;
