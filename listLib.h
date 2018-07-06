@@ -35,6 +35,9 @@ struct L1Item {
     L1Item(L1Item<T>* p) : pNext(p) {}
     L1Item(T &a) : data(a), pNext(NULL) {}
     L1Item(T &&a) : data(std::move(a)), pNext(NULL) {}
+    ~L1Item() {
+        delete pNext;
+    }
 };
 
 template <class T>
@@ -63,7 +66,7 @@ public:
         }
     }
     ~L1List() {
-        clean();
+        delete pHead;
     }
     bool    isEmpty() {
         return _pHead == NULL;
@@ -73,6 +76,9 @@ public:
     }
     void decreaseSize() {
         _size--;
+    }
+    void increaseSize() {
+        _size++;
     }
     L1Item<T>* getpHead() {
         return _pHead;
@@ -113,6 +119,22 @@ public:
     int     insertHead(L1Item<T>* NewNode);
     int     insertHead() {
         _pHead = new L1Item<T>(_pHead);
+        _size++;
+        return 0;
+    }
+    int     insertLast(L1Item<T>* NewNode) {
+        if(_pHead == NULL) {
+            _pHead = NewNode;
+        }
+        else {
+            L1Item<T>* p = _pHead;
+            L1Item<T>* pR = NULL;
+            while(p != NULL) {
+                pR = p;
+                p = p->pNext;
+            }
+            pR->pNext = NewNode;
+        }
         _size++;
         return 0;
     }

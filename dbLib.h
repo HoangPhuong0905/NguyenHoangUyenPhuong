@@ -52,11 +52,12 @@ struct VRecord {
                            x(vR.x), y(vR.y) {
         strcpy(id, vR.id);
     }
-
+    /*
     bool operator == (VRecord& b) {
         return  strcmp(id, b.id) == 0 &&
                 timestamp == b.timestamp;
     }
+    */
     VRecord& operator = (VRecord& b) {
         strcpy(id, b.id);
         timestamp = b.timestamp;

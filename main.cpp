@@ -1,11 +1,13 @@
 #include <iostream>
 #include <iomanip>
+#include <chrono>
 
 #include "listLib.h"
 #include "requestLib.h"
 #include "dbLib.h"
 
 using namespace std;
+typedef std::chrono::high_resolution_clock Clock;
 
 bool processRequest(VRequest& request, L1List<VRecord>& recList, void* pGData);
 bool initVGlobalData(void** pGData);
@@ -30,14 +32,14 @@ int main(int narg, char** argv) {
         clog << "Failed to initialize data\nExiting...\n";
         return -1;
     }
-    clock_t start = clock();
+    auto start = Clock::now();
     while (!reqList.isEmpty()) {
         if (!processRequest(reqList[0], recDB, pGData))
             cout << "Failed to process the request\n";
         reqList.removeHead();
     }
-    clock_t end = clock();
-    cout << (double)(end - start) / 1000 << endl;
+    auto end = Clock::now();
+    cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << endl;
     cout << resetiosflags(ios::showbase) << setprecision(-1);
     /// Release any global allocaed data
     releaseVGlobalData(pGData);
